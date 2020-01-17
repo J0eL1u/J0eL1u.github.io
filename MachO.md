@@ -4,10 +4,7 @@
 
 2. 文件头
 ```C
-/*
- * The 32-bit mach header appears at the very beginning of the object file for
- * 32-bit architectures.
- */
+/* The 32-bit mach header appears at the very beginning of the object file for 32-bit architectures. */
 struct mach_header {
     uint32_t    magic;      /* mach magic number identifier */
     cpu_type_t  cputype;    /* cpu specifier */
@@ -20,10 +17,7 @@ struct mach_header {
 /* Constant for the magic field of the mach_header (32-bit architectures) */
 #define MH_MAGIC    0xfeedface  /* the mach magic number */
 #define MH_CIGAM    0xcefaedfe  /* NXSwapInt(MH_MAGIC) */
-/*
- * The 64-bit mach header appears at the very beginning of object files for
- * 64-bit architectures.
- */
+/* The 64-bit mach header appears at the very beginning of object files for 64-bit architectures. */
 struct mach_header_64 {
     uint32_t    magic;      /* mach magic number identifier */
     cpu_type_t  cputype;    /* cpu specifier */
