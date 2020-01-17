@@ -1,8 +1,8 @@
 # MachO
-1. 基本结构
+## 基本结构
 ![](macho_1.png)
 
-2. 文件头
+## 文件头
 ```C
 /* The 32-bit mach header appears at the very beginning of the object file for 32-bit architectures. */
 struct mach_header {
@@ -106,7 +106,7 @@ MH_PREBINDABLE
 ......
 ```
 
-3. 加载命令
+## 加载命令
 ```C
 struct load_command {
     uint32_t cmd;
