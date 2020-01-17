@@ -120,7 +120,7 @@ struct load_command {
 };
 ```
 * cmd<br>
-命令类型<br>
+命令类型
 ```
 /* Constants for the cmd field of all load commands, the type */
 #define LC_SEGMENT 0x1 /* segment of this file to be mapped */
@@ -147,10 +147,7 @@ struct load_command {
 #define LC_SUB_LIBRARY 0x15 /* sub library */
 #define LC_TWOLEVEL_HINTS 0x16 /* two-level namespace lookup hints */
 #define LC_PREBIND_CKSUM 0x17 /* prebind checksum */
-/*
- * load a dynamically linked shared library that is allowed to be missing
- * (all symbols are weak imported).
- */
+/* load a dynamically linked shared library that is allowed to be missing (all symbols are weak imported). */
 #define LC_LOAD_WEAK_DYLIB (0x18 | LC_REQ_DYLD)
 #define LC_SEGMENT_64 0x19 /* 64-bit segment of this file to be mapped */
 #define LC_ROUTINES_64 0x1a /* 64-bit image routines */
