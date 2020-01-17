@@ -120,7 +120,7 @@ struct load_command {
 };
 ```
 * cmd<br>
-命令类型
+命令类型<br>
 ```
 /* Constants for the cmd field of all load commands, the type */
 #define LC_SEGMENT 0x1 /* segment of this file to be mapped */
