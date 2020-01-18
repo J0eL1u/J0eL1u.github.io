@@ -1,4 +1,3 @@
-# MachO
 ## 基本结构
 ![](macho_1.png)
 
@@ -6,27 +5,27 @@
 ```C
 /* The 32-bit mach header appears at the very beginning of the object file for 32-bit architectures. */
 struct mach_header {
-    uint32_t    magic;      /* mach magic number identifier */
-    cpu_type_t  cputype;    /* cpu specifier */
-    cpu_subtype_t   cpusubtype; /* machine specifier */
-    uint32_t    filetype;   /* type of file */
-    uint32_t    ncmds;      /* number of load commands */
-    uint32_t    sizeofcmds; /* the size of all the load commands */
-    uint32_t    flags;      /* flags */
+    uint32_t magic; /* mach magic number identifier */
+    cpu_type_t cputype; /* cpu specifier */
+    cpu_subtype_t cpusubtype; /* machine specifier */
+    uint32_t filetype /* type of file */
+    uint32_t ncmds; /* number of load commands */
+    uint32_t sizeofcmds; /* the size of all the load commands */
+    uint32_t flags; /* flags */
 };
 /* Constant for the magic field of the mach_header (32-bit architectures) */
-#define MH_MAGIC    0xfeedface  /* the mach magic number */
-#define MH_CIGAM    0xcefaedfe  /* NXSwapInt(MH_MAGIC) */
+#define MH_MAGIC 0xfeedface /* the mach magic number */
+#define MH_CIGAM 0xcefaedfe /* NXSwapInt(MH_MAGIC) */
 /* The 64-bit mach header appears at the very beginning of object files for 64-bit architectures. */
 struct mach_header_64 {
-    uint32_t    magic;      /* mach magic number identifier */
-    cpu_type_t  cputype;    /* cpu specifier */
-    cpu_subtype_t   cpusubtype; /* machine specifier */
-    uint32_t    filetype;   /* type of file */
-    uint32_t    ncmds;      /* number of load commands */
-    uint32_t    sizeofcmds; /* the size of all the load commands */
-    uint32_t    flags;      /* flags */
-    uint32_t    reserved;   /* reserved */
+    uint32_t magic; /* mach magic number identifier */
+    cpu_type_t cputype; /* cpu specifier */
+    cpu_subtype_t cpusubtype; /* machine specifier */
+    uint32_t filetype; /* type of file */
+    uint32_t ncmds; /* number of load commands */
+    uint32_t sizeofcmds; /* the size of all the load commands */
+    uint32_t flags; /* flags */
+    uint32_t reserved; /* reserved */
 };
 /* Constant for the magic field of the mach_header_64 (64-bit architectures) */
 #define MH_MAGIC_64 0xfeedfacf /* the 64-bit mach magic number */
@@ -162,3 +161,94 @@ struct load_command {
 
 * cmdsize<br>
 命令结构体的总字节数，每个加载命令前两个字段都一样，不同类型的命令后面字段不一样。
+1. LC_UUID
+```C
+struct uuid_command {
+    uint32_t cmd;
+    uint32_t cmdsize;
+    uint8_t uuid[16];
+};
+```
+128位文件UUID
+
+2. LC_SEGMENT, LC_SEGMENT_64
+```C
+struct segment_command {
+    uint32_t cmd;
+    uint32_t cmdsize;
+    char segname[16];
+    uint32_t vmaddr;
+    uint32_t vmsize;
+    uint32_t fileoff;
+    uint32_t filesize;
+    vm_prot_t maxprot;
+    vm_prot_t initprot;
+    uint32_t nsects;
+    uint32_t flags;
+};
+struct segment_command_64 {
+    uint32_t cmd;
+    uint32_t cmdsize;
+    char segname[16];
+    uint64_t vmaddr;
+    uint64_t vmsize;
+    uint64_t fileoff;
+    uint64_t filesize;
+    vm_prot_t maxprot;
+    vm_prot_t initprot;
+    uint32_t nsects;
+    uint32_t flags;
+};
+```
+以下字段描述针对64位文件
+* cmd<br>
+LC_SEGMENT_64
+* cmdsize<br>
+(sizeof(segment_command_64) + (sizeof(section_64) * segment->nsect)))
+* segname<br>
+段名称字符串
+* vmaddr<br>
+加载到内存后的起始地址
+* vmsize<br>
+加载到内存后的大小
+* fileoff<br>
+段数据在文件中的偏移
+* filesize<br>
+段数据在文件中的大小
+* maxprot<br>
+段的最大权限。段内所有数据权限相同，根据initprot初始化，在运行过程中可以被修改，但是权限不能超过maxprot指定的值(iOS中+w和+x互斥)
+* initprot<br>
+初始权限
+* nsects<br>
+紧跟在这个加载命令后面的section_64结构体数量
+* flags<br>
+标志位: SG_HIGHVM, SG_NORELOC......
+
+3. LC_SYMTAB<br>
+```C
+struct symtab_command {
+    uint_32 cmd;
+    uint_32 cmdsize;
+    uint_32 symoff;
+    uint_32 nsyms;
+    uint_32 stroff;
+    uint_32 strsize;
+};
+```
+描述符号表数据结构的位置和大小
+* cmd<br>
+LC_SYMTAB
+* cmdsize<br>
+sizeof(symtab_command)
+* symoff<br>
+符号表在文件中的偏移位置
+* nsyms<br>
+符号表中的条目数量
+* stroff<br>
+字符串表的偏移位置
+* strsize<br>
+字符串表的总字节数
+
+## 符号表
+
+## 重定位数据
