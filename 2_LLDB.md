@@ -27,3 +27,20 @@ $ lldb
 ```
 
 ### 常用命令
+* 帮助
+    * help
+    ```
+    //列出所有命令
+    (lldb) help
+
+    //显示breakpoint命令相关信息
+    (lldb) help breakpoint
+
+    //显示breakpoint name命令相关信息
+    (lldb) help breakpoint name
+    ```
+    * apropos
+    ```
+    //搜索关键词"breakpoint"相关的文档
+    (lldb) apropos breakpoint
+    ```
