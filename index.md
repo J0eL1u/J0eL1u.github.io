@@ -5,10 +5,10 @@
 2. [iOS](1_iOS.md)
 3. [MachO](1_MachO.md)
 4. [ObjC](1_ObjC.md)
-5. [LLDB](1_LLDB.md)
 
 #### 实战篇
-1. [越狱iOS调试环境](2_dbg.md)
+1. [Frida](2_Frida.md)
+2. [LLDB](2_LLDB.md)
 
 #### 专题篇
 1. [越狱检测](3_jd.md)
